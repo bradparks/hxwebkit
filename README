@@ -1,0 +1,19 @@
+
+HXWEBKIT
+========
+Haxe/Neko WebKit-GTK bindings
+
+
+LINKS
+-----
+http://webkit.org/
+http://nightly.webkit.org/
+http://webkitgtk.org/
+http://webkitgtk.org/reference/index.html
+http://code.google.com/p/pywebkitgtk/
+
+http://www.gtk.org/
+http://developer.gnome.org/gtk/2.24/
+http://projects.gnome.org/gtkglext/
+
+http://nekovm.org/doc/ffi

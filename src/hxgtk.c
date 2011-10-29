@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 #include <neko.h>
 
-static value _gtk_init() {
+static value hxgtk_init() {
 	if (!g_thread_supported())
 		g_thread_init(NULL);
 	g_type_init();
@@ -12,12 +12,12 @@ static value _gtk_init() {
 	return val_null;
 }
 
-static value _gtk_run() {
+static value hxgtk_run() {
 	gtk_main();
 	return val_null;
 }
 
-static value _gtk_exit() {
+static value hxgtk_exit() {
 	gtk_main_quit();
 	return val_null;
 }
@@ -33,7 +33,7 @@ void reportClose( value *cb ) {
 }
 
 //TODO window_constructor
-value window_init(value title, value width, value height, value onClose ) {
+value hxgtk_window_init(value title, value width, value height, value onClose ) {
 
 	val_check( title, string);
 	val_check( width, int);
@@ -58,12 +58,12 @@ value window_init(value title, value width, value height, value onClose ) {
 	return alloc_abstract(k_window, win);
 }
 
-value window_close(value w) {
+value hxgtk_window_close(value w) {
 	gtk_widget_destroy(val_data(w));
 	return val_null;
 }
 
-value window_active(value w) {
+value hxgtk_window_active(value w) {
 	//TODO test/clean
 	gboolean b;
 	b = gtk_window_is_active(val_data(w));
@@ -71,22 +71,22 @@ value window_active(value w) {
 	return alloc_bool(b);
 }
 
-value window_gettitle(value w) {
+value hxgtk_window_gettitle(value w) {
 	return alloc_string(gtk_window_get_title(val_data(w)));
 }
-value window_settitle(value w, value t) {
+value hxgtk_window_settitle(value w, value t) {
 	gtk_window_set_title(val_data(w), val_string(t));
 	return t;
 }
 
-value window_getresizeable(value w) {
+value hxgtk_window_getresizeable(value w) {
 	//printf("%i\n",gtk_window_get_resizable(val_data(w)));
 	gboolean b;
 	b = gtk_window_get_resizable(val_data(w));
 	return alloc_bool(b);
 }
 //TODO this sets the  window size to 0,0 wtf!?
-value window_setresizeable(value w, value v) {
+value hxgtk_window_setresizeable(value w, value v) {
 	//printf("%i\n",gtk_window_get_resizable(val_data(w)));
 	gtk_window_set_resizable(val_data(w), val_bool(v));
 	return v;
@@ -94,7 +94,7 @@ value window_setresizeable(value w, value v) {
 
 //TODO
 /*
-value window_getposition( value w) {
+value hxgtk_window_getposition( value w) {
 	//printf("TODO get pos \n");
 	int rx;
 	int ry;
@@ -104,7 +104,7 @@ value window_getposition( value w) {
 	return val_null;
 }
 */
-value window_setposition( value w, value p) {
+value hxgtk_window_setposition( value w, value p) {
 	GtkWindowPosition pos;
 	switch(val_int(p)) {
 	case 0 :
@@ -127,12 +127,12 @@ value window_setposition( value w, value p) {
 	return val_null;
 }
 
-value window_getopacity(value w) {
+value hxgtk_window_getopacity(value w) {
 	if (!val_is_abstract(w) || !val_is_kind(w, k_window))
 		neko_error();
 	return alloc_float(gtk_window_get_opacity(val_data(w)));
 }
-value window_setopacity(value w, value v) {
+value hxgtk_window_setopacity(value w, value v) {
 	val_check(v,float);
 	if (!val_is_abstract(w) || !val_is_kind(w, k_window))
 		neko_error();
@@ -140,98 +140,98 @@ value window_setopacity(value w, value v) {
 	return v;
 }
 
-value window_gethastoplevelfocus(value w) {
+value hxgtk_window_gethastoplevelfocus(value w) {
 	return alloc_bool(gtk_window_has_toplevel_focus(GTK_WINDOW(val_data(w))));
 }
 
-value window_maximize(value w) {
+value hxgtk_window_maximize(value w) {
 	gtk_window_maximize(val_data(w));
 	return val_null;
 }
-value window_unmaximize(value w) {
+value hxgtk_window_unmaximize(value w) {
 	gtk_window_unmaximize(val_data(w));
 	return val_null;
 }
 
-value window_fullscreen(value w) {
+value hxgtk_window_fullscreen(value w) {
 	gtk_window_fullscreen(val_data(w));
 	return val_null;
 }
-value window_unfullscreen(value w) {
+value hxgtk_window_unfullscreen(value w) {
 	gtk_window_unfullscreen(val_data(w));
 	return val_null;
 }
 
-value window_resize(value win, value w, value h) {
+value hxgtk_window_resize(value win, value w, value h) {
 	gtk_window_resize(val_data(win), val_int(w), val_int(h));
 	return val_null;
 }
 
-value window_iconify(value win) {
+value hxgtk_window_iconify(value win) {
 	gtk_window_iconify(val_data(win));
 	return val_null;
 }
-value window_deiconify(value win) {
+value hxgtk_window_deiconify(value win) {
 	gtk_window_deiconify(val_data(win));
 	return val_null;
 }
 
-value window_present(value win, value timestamp) {
+value hxgtk_window_present(value win, value timestamp) {
 	gtk_window_present_with_time(val_data(win),val_int(timestamp));
 	return val_null;
 }
 
 
-value window_setkeepabove(value win, value v) {
+value hxgtk_window_setkeepabove(value win, value v) {
 	gtk_window_set_keep_above(val_data(win),val_bool(v));
 	return val_null;
 }
-value window_setkeepbelow(value win, value v) {
+value hxgtk_window_setkeepbelow(value win, value v) {
 	gtk_window_set_keep_below(val_data(win),val_bool(v));
 	return val_null;
 }
 
-value window_setdecorated(value w, value v) {
+value hxgtk_window_setdecorated(value w, value v) {
 	gtk_window_set_decorated(val_data(w),val_bool(v));
 	return val_null;
 }
 
-value window_setdeleteable(value w, value v) {
+value hxgtk_window_setdeleteable(value w, value v) {
 	gtk_window_set_deletable(val_data(w),val_bool(v));
 	return val_null;
 }
 
-value window_move(value w, value x, value y) {
+value hxgtk_window_move(value w, value x, value y) {
 	gtk_window_move(val_data(w),val_int(x),val_int(y));
 	return val_null;
 }
 
-DEFINE_PRIM( _gtk_init, 0);
-DEFINE_PRIM( _gtk_run, 0);
-DEFINE_PRIM( _gtk_exit, 0);
+DEFINE_PRIM( hxgtk_init, 0);
+DEFINE_PRIM( hxgtk_run, 0);
+DEFINE_PRIM( hxgtk_exit, 0);
 
-DEFINE_PRIM( window_init, 4);
-DEFINE_PRIM( window_close, 1);
-DEFINE_PRIM( window_active, 1);
-DEFINE_PRIM( window_gettitle, 1);
-DEFINE_PRIM( window_settitle, 2);
-DEFINE_PRIM( window_getresizeable, 1);
-DEFINE_PRIM( window_setresizeable, 2);
-DEFINE_PRIM( window_getopacity, 1);
-DEFINE_PRIM( window_setopacity, 2);
-DEFINE_PRIM( window_gethastoplevelfocus, 1);
-//DEFINE_PRIM( window_getposition, 1);
-DEFINE_PRIM( window_setposition, 2);
-DEFINE_PRIM( window_maximize, 1);
-DEFINE_PRIM( window_unmaximize, 1);
-DEFINE_PRIM( window_fullscreen, 1);
-DEFINE_PRIM( window_unfullscreen, 1);
-DEFINE_PRIM( window_resize, 3);
-DEFINE_PRIM( window_iconify, 1);
-DEFINE_PRIM( window_deiconify, 1);
-DEFINE_PRIM( window_present, 2);
-DEFINE_PRIM( window_setkeepabove, 2);
-DEFINE_PRIM( window_setkeepbelow, 2);
-DEFINE_PRIM( window_setdecorated, 2);
-DEFINE_PRIM( window_setdeleteable, 2);
-DEFINE_PRIM( window_move, 3);
+DEFINE_PRIM( hxgtk_window_init, 4);
+DEFINE_PRIM( hxgtk_window_close, 1);
+DEFINE_PRIM( hxgtk_window_active, 1);
+DEFINE_PRIM( hxgtk_window_gettitle, 1);
+DEFINE_PRIM( hxgtk_window_settitle, 2);
+DEFINE_PRIM( hxgtk_window_getresizeable, 1);
+DEFINE_PRIM( hxgtk_window_setresizeable, 2);
+DEFINE_PRIM( hxgtk_window_getopacity, 1);
+DEFINE_PRIM( hxgtk_window_setopacity, 2);
+DEFINE_PRIM( hxgtk_window_gethastoplevelfocus, 1);
+//DEFINE_PRIM( hxgtk_window_getposition, 1);
+DEFINE_PRIM( hxgtk_window_setposition, 2);
+DEFINE_PRIM( hxgtk_window_maximize, 1);
+DEFINE_PRIM( hxgtk_window_unmaximize, 1);
+DEFINE_PRIM( hxgtk_window_fullscreen, 1);
+DEFINE_PRIM( hxgtk_window_unfullscreen, 1);
+DEFINE_PRIM( hxgtk_window_resize, 3);
+DEFINE_PRIM( hxgtk_window_iconify, 1);
+DEFINE_PRIM( hxgtk_window_deiconify, 1);
+DEFINE_PRIM( hxgtk_window_present, 2);
+DEFINE_PRIM( hxgtk_window_setkeepabove, 2);
+DEFINE_PRIM( hxgtk_window_setkeepbelow, 2);
+DEFINE_PRIM( hxgtk_window_setdecorated, 2);
+DEFINE_PRIM( hxgtk_window_setdeleteable, 2);
+DEFINE_PRIM( hxgtk_window_move, 3);

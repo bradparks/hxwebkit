@@ -12,9 +12,9 @@ class Lib {
 	
 	public static inline function x( f : String, args : Int = 0 ) : Dynamic {
 		#if cpp
-		return cpp.Lib.load( "webkit", "_gtk_"+f, args );
+		return cpp.Lib.load( "webkit", "hxgtk_"+f, args );
 		#elseif neko
-		return neko.Lib.load( "webkit", "_gtk_"+f, args );
+		return neko.Lib.load( "webkit", "hxgtk_"+f, args );
 		#end
 	}
 	

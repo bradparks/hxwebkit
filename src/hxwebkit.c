@@ -4,17 +4,14 @@
 #include <glib-2.0/glib.h>
 #include <glib-2.0/glib/gtypes.h>
 #include <glib-2.0/glib/ghash.h>
-#include <gtk/gtk.h>
-#include <webkit/webkit.h>
-#include <JavaScriptCore/JavaScript.h>
-#include <neko.h>
+#include "hxwebkit.h"
 #include "javascript.h"
 #include "plugin.h"
 
 DEFINE_KIND(k_webview);
 DEFINE_KIND(k_websettings);
 
-value webview_init(value window) {
+value hxwebkit_webview_init(value window) {
 
 	//if (!val_is_abstract(window) || !val_is_kind(window, k_window))
 	if (!val_is_abstract(window))
@@ -46,45 +43,45 @@ value webview_init(value window) {
 			"UTF-8", "");
 
 	/*
-	g_signal_connect(webview, "create-plugin-widget",
-			G_CALLBACK(web_view_create_plugin_widget_cb), NULL);
+	 g_signal_connect(webview, "create-plugin-widget",
+	 G_CALLBACK(web_view_create_plugin_widget_cb), NULL);
 
-	button_box = gtk_hbutton_box_new();
-	gtk_box_pack_start(GTK_BOX (vbox), button_box, false, false, 0);
-	register_button = gtk_button_new_with_mnemonic("Send _Registration");
-	gtk_widget_set_sensitive(register_button, false);
-	gtk_box_pack_start(GTK_BOX (button_box), register_button, false, false, 0);
+	 button_box = gtk_hbutton_box_new();
+	 gtk_box_pack_start(GTK_BOX (vbox), button_box, false, false, 0);
+	 register_button = gtk_button_new_with_mnemonic("Send _Registration");
+	 gtk_widget_set_sensitive(register_button, false);
+	 gtk_box_pack_start(GTK_BOX (button_box), register_button, false, false, 0);
 
-	webframe = webkit_web_view_get_main_frame(WEBKIT_WEB_VIEW (webview));
-	js_context = webkit_web_frame_get_global_context(webframe);
-	js_global = JSContextGetGlobalObject(js_context);
-	js_function_name = JSStringCreateWithUTF8CString("setCanRegister");
-	js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,
-			js_function_name, set_can_register_cb);
-	JSObjectSetProperty(js_context, js_global, js_function_name,
-			js_set_can_register, 0, NULL);
-	JSStringRelease(js_function_name);
-	*/
-
+	 webframe = webkit_web_view_get_main_frame(WEBKIT_WEB_VIEW (webview));
+	 js_context = webkit_web_frame_get_global_context(webframe);
+	 js_global = JSContextGetGlobalObject(js_context);
+	 js_function_name = JSStringCreateWithUTF8CString("setCanRegister");
+	 js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,
+	 js_function_name, set_can_register_cb);
+	 JSObjectSetProperty(js_context, js_global, js_function_name,
+	 js_set_can_register, 0, NULL);
+	 JSStringRelease(js_function_name);
+	 */
 
 	//testplugin_init();
-
 	webframe = webkit_web_view_get_main_frame(WEBKIT_WEB_VIEW (webview));
 	js_context = webkit_web_frame_get_global_context(webframe);
 	js_global = JSContextGetGlobalObject(js_context);
 
 	js_function_name = JSStringCreateWithUTF8CString("js_Webkit_test");
-	js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,js_function_name, webkit_js_test_cb);
-	JSObjectSetProperty(js_context, js_global, js_function_name, js_set_can_register, 0, NULL);
+	js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,
+			js_function_name, hxwebkit_js_test_cb);
+	JSObjectSetProperty(js_context, js_global, js_function_name,
+			js_set_can_register, 0, NULL);
 	JSStringRelease(js_function_name);
 
 	JSStringRef function_js_2_neko;
 	function_js_2_neko = JSStringCreateWithUTF8CString("remoting_js_2_neko");
-	js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,function_js_2_neko, remoting_js_2_neko);
-	JSObjectSetProperty(js_context, js_global, function_js_2_neko, js_set_can_register, 0, NULL);
+	js_set_can_register = JSObjectMakeFunctionWithCallback(js_context,
+			function_js_2_neko, hxwebkit_remoting_js_2_neko);
+	JSObjectSetProperty(js_context, js_global, function_js_2_neko,
+			js_set_can_register, 0, NULL);
 	JSStringRelease(function_js_2_neko);
-
-
 
 	gtk_widget_show_all(win);
 
@@ -118,7 +115,7 @@ static void alloc_websettings_float(value o, WebKitWebSettings *s, char *key) {
 	g_object_get(s, key, &v, NULL);
 	alloc_field(o, val_id(str_replace(key, "-", "_")), alloc_float(v));
 }
-value webview_getwebsettings(value v) {
+value hxwebkit_webview_getwebsettings(value v) {
 
 	WebKitWebSettings * s = webkit_web_view_get_settings(val_data(v));
 	value o;
@@ -176,7 +173,7 @@ value webview_getwebsettings(value v) {
 
 	return o;
 }
-value webview_setwebsettings(value v, value s) {
+value hxwebkit_webview_setwebsettings(value v, value s) {
 	//TODO
 	//WebKitWebSettings * s = webkit_web_view_get_settings(val_data(s));
 	//webkit_web_view_set_settings (WEBKIT_WEB_VIEW(my_webview), s);
@@ -188,60 +185,59 @@ value webview_setwebsettings(value v, value s) {
 	return val_null;
 }
 
-value webview_gettransparent(value v) {
+value hxwebkit_webview_gettransparent(value v) {
 	return alloc_bool(webkit_web_view_get_transparent(val_data(v)));
 }
-value webview_settransparent(value v, value t) {
+value hxwebkit_webview_settransparent(value v, value t) {
 	webkit_web_view_set_transparent(val_data(v), val_bool(t));
 	return t;
 }
 
-value webview_uri(value v) {
+value hxwebkit_webview_uri(value v) {
 	return alloc_string(webkit_web_view_get_uri(val_data(v)));
 }
 
-value webview_loadstring(value v, value str) {
+value hxwebkit_webview_loadstring(value v, value str) {
 	webkit_web_view_load_string(val_data(v), val_string(str), "text/html",
 			"UTF-8", "");
 	return val_null;
 }
 
-value webview_loaduri(value v, value s) {
+value hxwebkit_webview_loaduri(value v, value s) {
 	printf("URRRRRRRRI:\n");
 	webkit_web_view_load_uri(val_data(v), val_string(s));
 	return val_null;
 }
 
-value webview_reload(value v) {
+value hxwebkit_webview_reload(value v) {
 	webkit_web_view_reload(val_data(v));
 	return val_null;
 }
 
-value webview_reloadbypasscache(value v) {
+value hxwebkit_webview_reloadbypasscache(value v) {
 	webkit_web_view_reload_bypass_cache(val_data(v));
 	return val_null;
 }
 
-value webview_undo(value v) {
+value hxwebkit_webview_undo(value v) {
 	webkit_web_view_undo(val_data(v));
 	return val_null;
 }
 
-value webview_redo(value v) {
+value hxwebkit_webview_redo(value v) {
 	webkit_web_view_redo(val_data(v));
 	return val_null;
 }
 
-DEFINE_PRIM( webview_init, 1);
-DEFINE_PRIM( webview_getwebsettings, 1);
-DEFINE_PRIM( webview_setwebsettings, 2);
-DEFINE_PRIM( webview_gettransparent, 1);
-DEFINE_PRIM( webview_settransparent, 2);
-DEFINE_PRIM( webview_uri, 1);
-
-DEFINE_PRIM( webview_loadstring, 2);
-DEFINE_PRIM( webview_loaduri, 2);
-DEFINE_PRIM( webview_reload, 1);
-DEFINE_PRIM( webview_reloadbypasscache, 1);
-DEFINE_PRIM( webview_undo, 1);
-DEFINE_PRIM( webview_redo, 1);
+DEFINE_PRIM( hxwebkit_webview_init, 1);
+DEFINE_PRIM( hxwebkit_webview_getwebsettings, 1);
+DEFINE_PRIM( hxwebkit_webview_setwebsettings, 2);
+DEFINE_PRIM( hxwebkit_webview_gettransparent, 1);
+DEFINE_PRIM( hxwebkit_webview_settransparent, 2);
+DEFINE_PRIM( hxwebkit_webview_uri, 1);
+DEFINE_PRIM( hxwebkit_webview_loadstring, 2);
+DEFINE_PRIM( hxwebkit_webview_loaduri, 2);
+DEFINE_PRIM( hxwebkit_webview_reload, 1);
+DEFINE_PRIM( hxwebkit_webview_reloadbypasscache, 1);
+DEFINE_PRIM( hxwebkit_webview_undo, 1);
+DEFINE_PRIM( hxwebkit_webview_redo, 1);

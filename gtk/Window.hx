@@ -119,6 +119,6 @@ class Window {
 	static var _setdeletable = x( "setdeleteable", 2 );
 	static var _move = x( "move", 3 );
 	
-	static inline function x( f : String, n : Int = 0 ) : Dynamic return webkit.Lib.x( "window_"+f, n ) //TODO 1+n
+	static inline function x( f : String, n : Int = 0 ) : Dynamic return gtk.Lib.x( "window_"+f, n ) //TODO 1+n
 
 }

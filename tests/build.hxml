@@ -6,5 +6,5 @@
 -neko webkit_test.n
 
 --next
--js js/app.js
+-js app.js
 App

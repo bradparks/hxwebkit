@@ -6,7 +6,7 @@ INSTALL_PATH = /usr/lib/neko/
 CFLAGS = -shared -Wall -g
 NDLL = ndll/$(OS)/$(LIBNAME).ndll
 PKG_CONFIG = `pkg-config --cflags --libs gtk+-2.0 webkit-1.0`
-LDFLAGS = -Iinclude -L/usr/include -I/usr/lib/neko/include
+LDFLAGS = -Iinclude -I/usr/include -I/usr/lib/neko/include
 OBJ = src/hxwebkit.o src/hxwebkit_webview.o src/hxwebkit_javascript.o src/hxwebkit_plugin_test.o src/util.o
 
 all : ndll

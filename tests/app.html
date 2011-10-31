@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<style type="text/css">
+body {
+	background-color: #fff;
+	color: #333;
+}
+#ui {
+	color: #000;
+	-webkit-user-select: none;
+}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript">
+function run(){
+	document.getElementById("ui").innerHTML = "works ("+window.location+")!"; //("+document.navigator.path+";
+	//window.location = "http://disktree.net";
+	//document.getElementById("ui").innerHTML = "works!"; //("+document.navigator.path+";
+	//$(body).empty();
+	//remoting_js2neko("Hello neko i am javascript!");
+	//App.init();
+	//alert("23");
+}
+/*
+$(document).ready(function(){
+	alert("23");
+	//App.init();
+});
+*/
+</script>
+</head>
+<body onload="run()">
+<div></div>
+<div>HXWebkit</div>
+
+<div id="ui"></div>
+
+<!--
+<button id="btn_exit"><div>Exit</div></button>
+-->
+
+<form>
+	<!--
+	<input type="text" onkeyup="setCanRegister(this.value!='')">
+	<input type="text" style="color:#000;background-color:#A9F796;">
+	-->
+	<!-- custom plugin
+	<object type="application/x-gtk-color-button" style="height: 2em; width: 10em;"></object>
+	-->
+</form>
+<img src="img/haxe_128.png"/></img>
+
+<embed src="img/haxe.svg" type="image/svg+xml"/>
+
+<img src="http://blog.disktree.net/file/img/cnxs_100x100.png" alt="IMAgE"/></img>
+<canvas id="testcanvas" width='160' height='120' style='background-color:#0000ff;'></canvas>
+</body>
+</html>

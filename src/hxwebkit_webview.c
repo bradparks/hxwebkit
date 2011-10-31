@@ -12,7 +12,6 @@ DEFINE_KIND(k_webview);
 DEFINE_KIND(k_websettings);
 
 #define is_notification(n) ( val_is_abstract(n) && val_is_kind(n,k_notification) )
-//#define to_neko_fieldname(s) (str_replace(s,"-","_"))
 
 static void destroy(GtkWidget *widget, gpointer data) {
 	//gtk_main_quit();
@@ -99,7 +98,6 @@ value hxwebkit_webview_init(value window) {
 
 	return alloc_abstract(k_webview, webview);
 }
-
 
 static void alloc_websettings_bool(value o, WebKitWebSettings *s, char *key) {
 	gboolean* v = NULL;
@@ -212,7 +210,8 @@ value hxwebkit_webview_setwebsetting(value v, value id, value _value) {
 	//
 	WebKitWebView * view = WEBKIT_WEB_VIEW(val_data(v));
 	_websettings = webkit_web_view_get_settings(view);
-	set_websettings_field(_value, val_id( str_replace(val_string(id),"_","-") ), NULL);
+	set_websettings_field(_value, val_id(str_replace(val_string(id), "_", "-")),
+			NULL);
 	webkit_web_view_set_settings(view, _websettings);
 	//_websettings = NULL;
 	//WebKitWebSettings * _websettings = webkit_web_view_get_settings(val_data(v));
@@ -265,6 +264,36 @@ value hxwebkit_webview_redo(value v) {
 	return val_null;
 }
 
+
+value hxwebkit_webview_can_copy_clipboard(value v) {
+	return alloc_bool( webkit_web_view_can_copy_clipboard( val_data(v) ) );
+}
+value hxwebkit_webview_can_cut_clipboard(value v) {
+	return alloc_bool( webkit_web_view_can_cut_clipboard( val_data(v) ) );
+}
+value hxwebkit_webview_can_go_back(value v) {
+	return alloc_bool( webkit_web_view_can_go_back( val_data(v) ) );
+}
+value hxwebkit_webview_can_go_back_or_foward(value v, value steps) {
+	return alloc_bool( webkit_web_view_can_go_back_or_forward( val_data(v), val_int(steps) ) );
+}
+value hxwebkit_webview_can_go_foward(value v) {
+	return alloc_bool( webkit_web_view_can_go_forward( val_data(v) ) );
+}
+value hxwebkit_webview_can_paste_clipboard(value v) {
+	return alloc_bool( webkit_web_view_can_paste_clipboard( val_data(v) ) );
+}
+value hxwebkit_webview_can_go_redo(value v) {
+	return alloc_bool( webkit_web_view_can_redo( val_data(v) ) );
+}
+value hxwebkit_webview_can_show_mimetype(value v, value mimetype) {
+	return alloc_bool( webkit_web_view_can_show_mime_type( val_data(v), val_string( mimetype ) ) );
+}
+value hxwebkit_webview_can_go_undo(value v) {
+	return alloc_bool( webkit_web_view_can_undo( val_data(v) ) );
+}
+
+
 DEFINE_PRIM( hxwebkit_webview_init, 1);
 DEFINE_PRIM( hxwebkit_webview_getwebsettings, 1);
 DEFINE_PRIM( hxwebkit_webview_setwebsettings, 2);
@@ -278,3 +307,13 @@ DEFINE_PRIM( hxwebkit_webview_reload, 1);
 DEFINE_PRIM( hxwebkit_webview_reloadbypasscache, 1);
 DEFINE_PRIM( hxwebkit_webview_undo, 1);
 DEFINE_PRIM( hxwebkit_webview_redo, 1);
+
+DEFINE_PRIM( hxwebkit_webview_can_copy_clipboard, 1);
+DEFINE_PRIM( hxwebkit_webview_can_cut_clipboard, 1);
+DEFINE_PRIM( hxwebkit_webview_can_go_back, 1);
+DEFINE_PRIM( hxwebkit_webview_can_go_back_or_foward, 2);
+DEFINE_PRIM( hxwebkit_webview_can_go_foward, 1);
+DEFINE_PRIM( hxwebkit_webview_can_paste_clipboard, 1);
+DEFINE_PRIM( hxwebkit_webview_can_go_redo, 1);
+DEFINE_PRIM( hxwebkit_webview_can_show_mimetype, 2);
+DEFINE_PRIM( hxwebkit_webview_can_go_undo, 1);

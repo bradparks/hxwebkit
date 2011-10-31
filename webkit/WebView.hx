@@ -3,6 +3,14 @@ package webkit;
 class WebView {
 	
 	public var transparent(getTransparent,setTransparent) : Bool;
+	public var canCopyClipboard(getCanCopyClipboard,null) : Bool;
+	public var canCutClipboard(getCanCutClipboard,null) : Bool;
+	public var canGoBack(getCanGoBack,null) : Bool;
+	public var canGoForward(getCanGoForward,null) : Bool;
+	public var canPasteClipboard(getCanPasteClipboard,null) : Bool;
+	public var canRedo(getCanRedo,null) : Bool;
+	public var canUndo(getCanUndo,null) : Bool;
+	
 	public var uri(getUri,null) : String;
 	
 	var __i : Void;
@@ -14,6 +22,17 @@ class WebView {
 	inline function getTransparent() : Bool return _gettransparent(__i)
 	inline function setTransparent( v : Bool ) : Bool return _settransparent(__i,v)
 	inline function getUri() : String return _uri(__i)
+	
+	inline function getCanCopyClipboard() : Bool return _can_copy_clipboard(__i)
+	inline function getCanCutClipboard() : Bool return _can_cut_clipboard(__i)
+	inline function getCanGoBack() : Bool return _can_go_back(__i)
+	inline function getCanGoForward() : Bool return _can_go_foward(__i)
+	inline function getCanPasteClipboard() : Bool return _can_paste_clipboard(__i)
+	inline function getCanRedo() : Bool return _can_copy_clipboard(__i)
+	inline function getCanUndo() : Bool return _can_copy_clipboard(__i)
+	
+	public inline function canGoBackOrForward( steps : Int ) : Bool return _can_go_back_or_foward(__i,steps)
+	public inline function canShowMimeType( mimetype : String ) : Bool return _can_go_back_or_foward(__i,untyped mimetype.__S)
 	
 	public inline function getSettings() : WebSettings return _getwebsettings(__i)
 	public inline function setSettings( settings : WebSettings ) {
@@ -34,6 +53,17 @@ class WebView {
 	public inline function redo() _redo(__i)
 	
 	static var _init = x( "init" );
+	
+	static var _can_copy_clipboard = x( "can_copy_clipboard" );
+	static var _can_cut_clipboard = x( "can_cut_clipboard" );
+	static var _can_go_back = x( "can_go_back" );
+	static var _can_go_back_or_foward = x( "can_go_back_or_foward", 1 );
+	static var _can_go_foward = x( "can_go_foward" );
+	static var _can_paste_clipboard = x( "can_paste_clipboard" );
+	static var _can_go_redo = x( "can_go_redo" );
+	static var _can_show_mimetype = x( "can_show_mimetype", 1 );
+	static var _can_go_undo = x( "can_go_undo" );
+	
 	static var _getwebsettings = x( "getwebsettings" );
 	static var _setwebsettings = x( "setwebsettings", 1 );
 	static var _setwebsetting = x( "setwebsetting", 2 );

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /**
@@ -16,7 +17,7 @@ char * str_replace(char const * const original, char const * const pattern,
 	const char * patloc;
 
 	// find how many times the pattern occurs in the original string
-	for (oriptr = original; patloc = strstr(oriptr, pattern);
+	for (oriptr = original; (patloc = strstr(oriptr, pattern));
 			oriptr = patloc + patlen) {
 		patcnt++;
 	}
@@ -25,23 +26,18 @@ char * str_replace(char const * const original, char const * const pattern,
 		// allocate memory for the new string
 		size_t const retlen = orilen + patcnt * (replen - patlen);
 		char * const returned = (char *) malloc(sizeof(char) * (retlen + 1));
-
 		if (returned != NULL) {
-			// copy the original string,
-			// replacing all the instances of the pattern
+			// copy the original string, replacing all the instances of the pattern
 			char * retptr = returned;
-			for (oriptr = original; patloc = strstr(oriptr, pattern);
+			for (oriptr = original; (patloc = strstr(oriptr, pattern));
 					oriptr = patloc + patlen) {
 				size_t const skplen = patloc - oriptr;
-				// copy the section until the occurence of the pattern
-				strncpy(retptr, oriptr, skplen);
+				strncpy(retptr, oriptr, skplen); // copy the section until the occurence of the pattern
 				retptr += skplen;
-				// copy the replacement
-				strncpy(retptr, replacement, replen);
+				strncpy(retptr, replacement, replen); // copy the replacement
 				retptr += replen;
 			}
-			// copy the rest of the string.
-			strcpy(retptr, oriptr);
+			strcpy(retptr, oriptr); // copy the rest of the string
 		}
 		return returned;
 	}

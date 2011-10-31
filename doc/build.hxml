@@ -1,0 +1,10 @@
+
+-cp ../../hxgtk
+-cp ../
+-neko temp.n
+webkit.Lib
+webkit.WebView
+webkit.WebSettings
+-xml hxwebkit.xml 
+-cmd haxedoc hxwebkit.xml -f webkit
+-cmd rm temp.n

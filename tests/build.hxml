@@ -1,0 +1,10 @@
+
+-cp ../../hxgtk
+-cp ../../hxlibnotify
+-cp ../
+-main TestWebkit
+-neko webkit_test.n
+
+--next
+-js js/app.js
+App

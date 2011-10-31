@@ -2,7 +2,6 @@ package webkit;
 
 class WebView {
 	
-	//public var settings(getSettings,setSettings) : WebSettings;
 	public var transparent(getTransparent,setTransparent) : Bool;
 	public var uri(getUri,null) : String;
 	
@@ -17,18 +16,15 @@ class WebView {
 	inline function getUri() : String return _uri(__i)
 	
 	public inline function getSettings() : WebSettings return _getwebsettings(__i)
-	public inline function setSettings( v : WebSettings ) : WebSettings {
-		_setwebsettings(__i,v);
+	public inline function setSettings( settings : WebSettings ) {
+		_setwebsettings(__i,settings);
+		return null;
+	}
+	public inline function setSetting( id : String, value : Dynamic ) {
+		_setwebsetting(__i,untyped id.__s,value);
 		//TODO
-		return v;
+		return null;
 	}
-	/*
-	public function loadApp( path : String, ?ctx : Dynamic ) {
-		//if( ctx == null ) ctx = {};
-		//var tpl = new haxe.Template( File.getContent("app.hxwebkit") ).execute( ctx );
-		loadString( tpl.execute( ctx ) );
-	}
-	*/
 	public inline function loadHtmlFile( path : String ) loadString( neko.io.File.getContent("file://"+path) )
 	public inline function loadString(t:String) _loadstring(__i,untyped t.__s)
 	public inline function loadUri(t:String) _loaduri(__i,untyped t.__s)
@@ -40,6 +36,8 @@ class WebView {
 	static var _init = x( "init" );
 	static var _getwebsettings = x( "getwebsettings" );
 	static var _setwebsettings = x( "setwebsettings", 1 );
+	static var _setwebsetting = x( "setwebsetting", 2 );
+	
 	static var _uri = x( "uri" );
 	
 	static var _gettransparent = x( "gettransparent" );
@@ -51,6 +49,6 @@ class WebView {
 	static var _undo = x( "undo" );
 	static var _redo = x( "redo" );
 	
-	static inline function x( f : String, n : Int = 0 ) : Dynamic return Lib.x( "webview_"+f, 1+n )
+	static inline function x( f : String, n : Int = 0 ) : Dynamic return webkit.Lib.load( "webview_"+f, 1+n )
 		
 }

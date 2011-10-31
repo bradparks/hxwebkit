@@ -1,7 +1,7 @@
 
 HXWEBKIT
 ========
-Haxe/Neko WebKit-GTK bindings
+Haxe/Neko WebKitGTK bindings
 
 
 LINKS
@@ -16,3 +16,9 @@ http://developer.gnome.org/gtk/2.24/
 http://projects.gnome.org/gtkglext/
 http://nekovm.org/doc/ffi
 http://developer.apple.com/library/mac/#documentation/Carbon/Reference/WebKit_JavaScriptCore_Ref/
+http://stackoverflow.com/questions/3305736/play-a-video-using-gtk
+
+http://rvr.typepad.com/wind/2011/10/webkit-extending-javascript-1.html
+
+http://linuxundich.de/de/ubuntu/gtk-tutorial-v-programmiert-einen-video-player-mit-gtk-und-gstreamer/
+http://blogs.gnome.org/uraeus/2011/10/04/tutorial-for-python-gstreamer-and-gtk-3/

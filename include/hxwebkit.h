@@ -9,6 +9,6 @@
 //DEFINE_KIND(k_webview);
 //DEFINE_KIND(k_websettings);
 
-char * str_replace(char const * const original, char const * const pattern, char const * const replacement);
+//char * str_replace(char const * const original, char const * const pattern, char const * const replacement);
 
 #endif /* HXWEBKIT_H_ */

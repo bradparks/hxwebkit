@@ -4,6 +4,7 @@
 -cp ../
 -main TestWebkit
 -neko webkit_test.n
+-D DEBUG_WEBKIT
 
 --next
 -js app.js

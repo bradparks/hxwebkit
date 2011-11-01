@@ -20,14 +20,18 @@ class TestWebkit {
 		gtk.Lib.init();
 		webkit.Lib.init();
 		
+		/*
 		notify.Lib.init( "TestHXLibnotify" );
 		print( "  notify.ServerInfo: "+notify.Lib.getServerInfo() );
 		var notifyCaps = notify.Lib.getServerCaps();
 		print( "  notify.ServerCapabilities: "+notifyCaps );
 		var n = new notify.Notification( "HXWebkit", 'Version: '+webkit.Lib.VERSION, cwd+'img/haxe_128.png', 1000 );
 		n.show();
+		*/
 		
 		var win = new Win( "HXWebkit.test", 480, 720 );
+		
+		/*
 		win.view.setSettings( {
 			default_monospace_font_size: 12,
 		    enable_scripts: true,
@@ -75,15 +79,16 @@ class TestWebkit {
 		    enable_site_specific_quirks: true,
 		    enable_xss_auditor: true,
 		});
-		
-		print( "  WebSettings:" );
-		var settings = win.view.getSettings();
-		for( f in Reflect.fields( settings ) ) { print( "    "+f+": "+Reflect.field(settings,f) ); }
+		*/
+
+		webkit.Lib.printWebViewProperties( win.view );
+		webkit.Lib.printWebViewSettings( win.view );
 		
 		win.view.loadString( File.getContent( cwd+"app.html" ) );
+		//win.view.loadHtmlString( File.getContent( cwd+"app.html" ) );
 		
 		gtk.Lib.run();
-		notify.Lib.uninit();
+//		notify.Lib.uninit();
 		gtk.Lib.quit();
 	}
 	

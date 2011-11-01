@@ -7,7 +7,8 @@ CFLAGS = -shared -Wall -g
 NDLL = ndll/$(OS)/$(LIBNAME).ndll
 PKG_CONFIG = `pkg-config --cflags --libs gtk+-2.0 webkit-1.0`
 LDFLAGS = -Iinclude -I/usr/include -I/usr/lib/neko/include
-OBJ = src/hxwebkit.o src/hxwebkit_webview.o src/hxwebkit_javascript.o src/hxwebkit_plugin_test.o src/util.o
+OBJ = src/hxwebkit.o src/hxwebkit_webview.o src/hxwebkit_javascript.o src/hxwebkit_util.o \
+	src/hxwebkit_plugin_test.o
 
 all : ndll
 
@@ -37,4 +38,3 @@ clean:
 	rm -rf doc/content
 
 .PHONY: all ndll install tests tests-run doc clean
-

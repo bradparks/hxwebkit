@@ -84,7 +84,7 @@ class TestWebkit {
 		webkit.Lib.printWebViewProperties( win.view );
 		webkit.Lib.printWebViewSettings( win.view );
 		
-		win.view.loadString( File.getContent( cwd+"app.html" ) );
+		win.view.loadString( File.getContent( cwd+"/app/app.html" ) );
 		//win.view.loadHtmlString( File.getContent( cwd+"app.html" ) );
 		
 		gtk.Lib.run();

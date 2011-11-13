@@ -84,7 +84,7 @@ class WebView {
 	var __i : Void;
 	
 	public function new( win : gtk.Window ) {
-		__i = _init( untyped win.__i );
+		__i = _constructor( untyped win.__i );
 	}
 	
 	inline function getCanCopyClipboard() : Bool return _can_copy_clipboard(__i)
@@ -166,7 +166,7 @@ class WebView {
 	public inline function zoomOut() _zoom_out(__i)
 	inline function getWindowFeatures() : WindowFeatures return _get_window_features(__i)
 	
-	static var _init = x( "init" );
+	static var _constructor = x( "constructor" );
 	
 	static var _can_copy_clipboard = x( "can_copy_clipboard" );
 	static var _can_cut_clipboard = x( "can_cut_clipboard" );
@@ -215,7 +215,7 @@ class WebView {
 	static var _load_html_string = x( "load_html_string", 2 );
 	static var _load_request = x( "load_request" );
 	static var _load_string = x( "load_string", 4 );
-	static var _load_uri = x( "load_uri" );
+	static var _load_uri = x( "load_uri", 1 );
 	static var _mark_text_matches = x( "mark_text_matches", 3 );
 	static var _move_cursor = x( "move_cursor", 2 );
 	static var _paste_clipboard = x( "paste_clipboard" );

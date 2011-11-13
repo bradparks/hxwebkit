@@ -1,4 +1,5 @@
 
+import neko.Sys;
 import neko.io.File;
 
 private class Win extends gtk.Window {
@@ -15,23 +16,23 @@ class TestWebkit {
 	
 	static function main() {
 		
-		var cwd = neko.Sys.getCwd();
+		var cwd = Sys.getCwd();
+		//print("CWD: "+cwd);
+		//Sys.setCwd("/usr/share/hxwebkit-test");
+		//print("CWD: "+cwd);
 		
 		gtk.Lib.init();
 		webkit.Lib.init();
 		
-		/*
 		notify.Lib.init( "TestHXLibnotify" );
 		print( "  notify.ServerInfo: "+notify.Lib.getServerInfo() );
 		var notifyCaps = notify.Lib.getServerCaps();
 		print( "  notify.ServerCapabilities: "+notifyCaps );
-		var n = new notify.Notification( "HXWebkit", 'Version: '+webkit.Lib.VERSION, cwd+'img/haxe_128.png', 1000 );
+		var n = new notify.Notification( "HXWebkit", 'Version: '+webkit.Lib.VERSION, cwd+'html/img/haxe_128.png', 1000 );
 		n.show();
-		*/
 		
 		var win = new Win( "HXWebkit.test", 480, 720 );
 		
-		/*
 		win.view.setSettings( {
 			default_monospace_font_size: 12,
 		    enable_scripts: true,
@@ -79,13 +80,15 @@ class TestWebkit {
 		    enable_site_specific_quirks: true,
 		    enable_xss_auditor: true,
 		});
-		*/
-
-		webkit.Lib.printWebViewProperties( win.view );
-		webkit.Lib.printWebViewSettings( win.view );
 		
-		win.view.loadString( File.getContent( cwd+"/app/app.html" ) );
+
+//		webkit.Lib.printWebViewProperties( win.view );
+//		webkit.Lib.printWebViewSettings( win.view );
+		
+		win.view.loadString( File.getContent( "html/app.html" ) );
+		//win.view.loadString( File.getContent( cwd+"/app/app.html" ) );
 		//win.view.loadHtmlString( File.getContent( cwd+"app.html" ) );
+		//win.view.loadUri("disktree.net");
 		
 		gtk.Lib.run();
 //		notify.Lib.uninit();

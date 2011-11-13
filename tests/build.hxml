@@ -5,7 +5,10 @@
 -main TestWebkit
 -neko test.n
 -D DEBUG_WEBKIT
+-D WEBKIT_SYS
 
 --next
 -js app/app.js
 App
+-D DEBUG_WEBKIT
+-D WEBKIT_APP

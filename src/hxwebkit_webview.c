@@ -15,12 +15,18 @@ DEFINE_KIND(k_websettings);
 
 WebKitWebSettings *_websettings;
 
+/*
 static void destroy(GtkWidget *widget, gpointer data) {
 	//gtk_main_quit();
 	printf("DESTROY\n");
+	printf("DESTROY %i \n", GPOINTER_TO_INT(data));
 }
+*/
 
-value hxwebkit_webview_init(value window) {
+/**
+ *
+ */
+value hxwebkit_webview_constructor(value window) {
 
 	//if (!val_is_abstract(window) || !val_is_kind(window, k_window))
 	if (!val_is_abstract(window))
@@ -71,7 +77,8 @@ value hxwebkit_webview_init(value window) {
 	 JSStringRelease(js_function_name);
 	 */
 
-	g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(destroy), NULL);
+	//int v = 23;
+	//g_signal_connect(G_OBJECT(win), "destroy", G_CALLBACK(destroy), &v );
 
 	//testplugin_init();
 	webframe = webkit_web_view_get_main_frame(WEBKIT_WEB_VIEW (webview));
@@ -95,7 +102,7 @@ value hxwebkit_webview_init(value window) {
 			js_set_can_register, 0, NULL);
 	JSStringRelease(function_js_2_neko);
 
-	gtk_widget_show_all(win);
+	gtk_widget_show_all(win); //TODO remove wtf
 
 	return alloc_abstract(k_webview, webview);
 }
@@ -592,7 +599,7 @@ value hxwebkit_webview_get_window_features(value _v) {
 	return o;
 }
 
-DEFINE_PRIM( hxwebkit_webview_init, 1);
+DEFINE_PRIM( hxwebkit_webview_constructor, 1);
 
 DEFINE_PRIM( hxwebkit_webview_can_copy_clipboard, 1);
 DEFINE_PRIM( hxwebkit_webview_can_cut_clipboard, 1);
@@ -641,7 +648,7 @@ DEFINE_PRIM( hxwebkit_webview_has_selection, 1);
 DEFINE_PRIM( hxwebkit_webview_load_html_string, 3);
 DEFINE_PRIM( hxwebkit_webview_load_request, 1);
 DEFINE_PRIM( hxwebkit_webview_load_string, 5);
-DEFINE_PRIM( hxwebkit_webview_load_uri, 1);
+DEFINE_PRIM( hxwebkit_webview_load_uri, 2);
 DEFINE_PRIM( hxwebkit_webview_mark_text_matches, 4);
 DEFINE_PRIM( hxwebkit_webview_move_cursor, 3);
 //DEFINE_PRIM( hxwebkit_webview_new, 1);
